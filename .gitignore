@@ -1,6 +1,7 @@
-.node_modules
+node_modules
 .log
 .repos
 .env
+package-lock.json
 log_register.json
 user_register.json
