@@ -1,6 +1,7 @@
 import env from '../../../config.js';
 import fs from "fs"
 import { log } from '../../logger/logger.js';
+import { generateRandomKey } from '../../util/random.js';
 
 const root = env.REPO_FOLDER_PATH || `${process.cwd()}/.repo`
 
@@ -8,6 +9,14 @@ function createLogFolderIfNotThere(){
     if(!fs.existsSync(root)){
         fs.mkdirSync(root)
     }
+}
+
+export function readJSONFile(filename){
+    return JSON.parse(fs.readFileSync(filename, "utf-8"))
+}
+
+export function writeJSONFile(filename, data){
+    return fs.writeFileSync(filename, JSON.stringify(data))
 }
 
 export function initRepoFolder(){
@@ -37,4 +46,17 @@ export function deleteRepo(repo_name){
     } catch (err) {
         log("warning","failed to remove repo")
     }
+}
+
+export function addVersionToTree(repo_id, old_version_id, new_version_id, branch_title, comment, second_parent){
+    let META = readJSONFile(`${root}/${repo_id}/meta.json`)
+    
+    META["version_tree"].push({
+        id: new_version_id,
+        parents: [old_version_id, second_parent],
+        branch_title: branch_title,
+        comment: comment
+    })
+
+    writeJSONFile(`${root}/${repo_id}/meta.json`,META)
 }

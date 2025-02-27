@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import env from './config.js';
 import { initRepoFolder } from './app/store/repository/repo.js';
 import { initializeRegisterFiles } from './app/store/auth/readFromUserRegister.js';
+import fileUpload from 'express-fileupload';
 
 initializeLogfile()
 initRepoFolder()
