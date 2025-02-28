@@ -6,3 +6,4 @@ package-lock.json
 log_register.json
 user_register.json
 .repo
+.build
